@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlanIt</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <img class="logo-img" src="https://freesvg.org/img/abstract-user-flat-4.png" alt="User img" />
+            </header>
+            <nav>
+                <button onclick="window.location.href='/calendar'">
+                    <span>
+                      <i class="material-symbols-outlined">calendar_month</i>
+                      <span>Agenda</span>
+                    </span>
+                  </button>
+                  <button onclick="window.location.href='/notes'">
+                    <span>
+                      <i class="material-symbols-outlined">edit_note</i>
+                      <span>Notas</span>
+                    </span>
+                  </button>
+                  <button onclick="window.location.href='/checklist'">
+                    <span>
+                      <i class="material-symbols-outlined">checklist</i>
+                      <span>Checklist</span>
+                    </span>
+                  </button>
+                  <button class="logout-button" onclick="window.location.href='/logout'">
+                    <span>
+                      <i class="material-symbols-outlined">logout</i>
+                    </span>
+                  </button> 
+            </nav>
+        </aside>
+
+        {% block conteudo %}
+        {% endblock %}
+
+    </div>
+</body>
+</html>

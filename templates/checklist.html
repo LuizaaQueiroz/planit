@@ -1,0 +1,83 @@
+{% extends 'sidebar.html' %}
+        
+{% block conteudo %}
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checklistStyle.css') }}">
+
+<div class="container">
+    <div class="todo-app">
+        <span>
+            <h2>Checklist <i class="material-symbols-outlined">checklist_rtl</i> </h2>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="adicionar">
+                <button onclick="addTask()">salvar</button>
+            </div>  
+            <ul id="list-container"></ul>    
+        </span>
+    </div>
+</div>
+
+<script>
+    const inputBox = document.getElementById("input-box");
+    const listContainer = document.getElementById("list-container");
+
+    function addTask() {
+        if (inputBox.value.trim() === '') {
+            alert("Preencha o campo");
+            return;
+        }
+
+        let li = document.createElement("li");
+        li.innerHTML = inputBox.value;
+
+        // Permite marcar/desmarcar a tarefa
+        li.addEventListener("click", function() {
+            this.classList.toggle("checked");
+            saveList();
+        });
+
+        // Criando botão de exclusão
+        let span = document.createElement("span");
+        span.innerHTML = "\u00d7"; // "×"
+        span.classList.add("close");
+        span.addEventListener("click", function(event) {
+            event.stopPropagation(); // Evita que clique no "×" marque a tarefa
+            li.remove();
+            saveList();
+        });
+
+        li.appendChild(span);
+        listContainer.appendChild(li);
+        inputBox.value = "";
+        saveList();
+    }
+
+    function saveList() {
+        localStorage.setItem("data", listContainer.innerHTML);
+    }
+
+    function loadList() {
+        listContainer.innerHTML = localStorage.getItem("data") || "";
+
+        // Adiciona eventos novamente para os itens restaurados do localStorage
+        document.querySelectorAll("li").forEach(li => {
+            li.addEventListener("click", function() {
+                this.classList.toggle("checked");
+                saveList();
+            });
+
+            let span = li.querySelector("span");
+            if (span) {
+                span.addEventListener("click", function(event) {
+                    event.stopPropagation();
+                    li.remove();
+                    saveList();
+                });
+            }
+        });
+    }
+
+    // Carregar a lista salva ao iniciar
+    loadList();
+</script>
+{% endblock %}

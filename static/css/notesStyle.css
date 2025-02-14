@@ -1,0 +1,230 @@
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #c7c3c3;
+    margin-bottom: 10px;
+}
+
+.wrapper {
+    margin: 50px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, 300px);
+    margin-left: 180px; 
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+.note-actions {
+    display: flex;
+    gap: 10px; 
+}
+
+.note-actions i {
+    cursor: pointer; 
+    font-size: 24px;
+    color: #ffffff; 
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.wrapper li {
+    height: inherit;
+    list-style: none;
+    background: #524141;
+    border-radius: 5px;
+    padding: 15px 20px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.wrapper li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.add-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    background: #635555;
+    border: 2px dashed #c7c3c3;
+}
+
+.add-box i {
+    font-size: 48px;
+    color: #c7c3c3;
+}
+
+.add-box p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #c7c3c3;
+}
+
+.note .details p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.note .details span {
+    font-size: 14px;
+    color: #c7c3c3;
+}
+
+.bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.bottom-content span {
+    font-size: 12px;
+    color: #c7c3c3;
+}
+
+.settings i {
+    cursor: pointer;
+    color: #c7c3c3;
+    transition: color 0.2s ease;
+}
+
+.settings i:hover {
+    color: #fff;
+}
+
+/* Estilos para o modal add notes */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #524141;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    margin-left: 180px;
+    max-width: 500px;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #635555; /* Mesma cor do botão de adicionar */
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.modal-content textarea {
+    height: 100px;
+    resize: none;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    background: #c7c3c3;
+    color: #333;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.modal-content button:hover {
+    background: #fff;
+}
+
+.close {
+    color: #c7c3c3;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #fff;
+}
+
+#editModal .modal-content input,
+#editModal .modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #635555;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+#editModal .modal-content textarea {
+    height: 100px;
+    resize: none;
+}
+
+#editModal .modal-content button {
+    width: 100%;
+    padding: 10px;
+    background: #c7c3c3;
+    color: #333;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+#editModal .modal-content button:hover {
+    background: #fff;
+}
+
+#editModal .close {
+    color: #c7c3c3;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+
+#editModal .close:hover {
+    color: #fff;
+}
+
+
