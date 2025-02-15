@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color:white;
 }
 .container {
     width: 100%;
@@ -36,6 +37,7 @@
  border-radius: 30px;
  padding-left: 20px;
  margin-bottom: 25px;
+
 }
 input{
     flex:1;
@@ -50,6 +52,7 @@ button{
     outline: none;
     padding: 16px 50px;
     background: #e2e2e2;
+    color:black;
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;

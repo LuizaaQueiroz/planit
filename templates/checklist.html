@@ -22,17 +22,17 @@ const listContainer = document.getElementById("list-container");
 
 // Carregar checklist do backend
 async function loadList() {
-    const response = await fetch('/_checklist');  // Corrigido para /_checklist
+    const response = await fetch('/_checklist');  
     const data = await response.json();
     listContainer.innerHTML = "";
 
     data.forEach(item => {
         let li = document.createElement("li");
         li.innerHTML = item.name;
-        li.dataset.id = item.id;  // Guarda o ID do item
+        li.dataset.id = item.id; 
 
         if (item.checked) {
-            li.classList.add("checked");  // Se estiver marcado, adiciona a classe
+            li.classList.add("checked");  
         }
 
         // Marcar/desmarcar ao clicar
@@ -63,7 +63,7 @@ async function addTask() {
         return;
     }
 
-    const response = await fetch('/save_checklist', {  // Alterado para /save_checklist
+    const response = await fetch('/save_checklist', {  
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({name: inputBox.value})

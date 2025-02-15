@@ -5,7 +5,7 @@ from flask import jsonify
 
 # Definição da aplicação Flask
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta'  # Necessário para sessões e flash messages
+app.secret_key = '353620'  # Necessário para sessões e flash messages
 
 # Configuração do banco de dados PostgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:353620@localhost/planit'
@@ -234,16 +234,16 @@ def calendar():
     # Recuperar eventos do usuário no banco de dados
     events = CalendarEvent.query.filter_by(user_id=user_id).all()
     
-    calendar_events = []
+    calendarEvents = []
     for event in events:
-        calendar_events.append({
+        calendarEvents.append({
             'title': event.title,
             'start': event.date.strftime('%Y-%m-%dT%H:%M:%S'),
             'end': event.date.strftime('%Y-%m-%dT%H:%M:%S'),
             'description': event.description,
         })
 
-    return render_template('calendar.html', events=calendar_events)
+    return render_template('calendar.html', events=calendarEvents)
 
 @app.route('/notes')
 def notes():
@@ -265,3 +265,4 @@ def checklist():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
