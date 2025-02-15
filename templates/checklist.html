@@ -16,68 +16,77 @@
         </span>
     </div>
 </div>
-
 <script>
-    const inputBox = document.getElementById("input-box");
-    const listContainer = document.getElementById("list-container");
+const inputBox = document.getElementById("input-box");
+const listContainer = document.getElementById("list-container");
 
-    function addTask() {
-        if (inputBox.value.trim() === '') {
-            alert("Preencha o campo");
-            return;
+// Carregar checklist do backend
+async function loadList() {
+    const response = await fetch('/_checklist');  // Corrigido para /_checklist
+    const data = await response.json();
+    listContainer.innerHTML = "";
+
+    data.forEach(item => {
+        let li = document.createElement("li");
+        li.innerHTML = item.name;
+        li.dataset.id = item.id;  // Guarda o ID do item
+
+        if (item.checked) {
+            li.classList.add("checked");  // Se estiver marcado, adiciona a classe
         }
 
-        let li = document.createElement("li");
-        li.innerHTML = inputBox.value;
-
-        // Permite marcar/desmarcar a tarefa
-        li.addEventListener("click", function() {
-            this.classList.toggle("checked");
-            saveList();
+        // Marcar/desmarcar ao clicar
+        li.addEventListener("click", async function() {
+            await toggleTask(item.id);
+            li.classList.toggle("checked");
         });
 
-        // Criando botão de exclusão
+        // Criar botão de excluir
         let span = document.createElement("span");
         span.innerHTML = "\u00d7"; // "×"
         span.classList.add("close");
-        span.addEventListener("click", function(event) {
+        span.addEventListener("click", async function(event) {
             event.stopPropagation(); // Evita que clique no "×" marque a tarefa
+            await deleteTask(item.id);
             li.remove();
-            saveList();
         });
 
         li.appendChild(span);
         listContainer.appendChild(li);
+    });
+}
+
+// Adicionar nova tarefa
+async function addTask() {
+    if (inputBox.value.trim() === '') {
+        alert("Preencha o campo");
+        return;
+    }
+
+    const response = await fetch('/save_checklist', {  // Alterado para /save_checklist
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name: inputBox.value})
+    });
+
+    if (response.ok) {
         inputBox.value = "";
-        saveList();
+        loadList();
     }
+}
 
-    function saveList() {
-        localStorage.setItem("data", listContainer.innerHTML);
-    }
+// Alternar item marcado/desmarcado
+async function toggleTask(id) {
+    await fetch(`/checklist/${id}`, { method: 'PATCH' });
+}
 
-    function loadList() {
-        listContainer.innerHTML = localStorage.getItem("data") || "";
+// Excluir tarefa
+async function deleteTask(id) {
+    await fetch(`/checklist/${id}`, { method: 'DELETE' });
+}
 
-        // Adiciona eventos novamente para os itens restaurados do localStorage
-        document.querySelectorAll("li").forEach(li => {
-            li.addEventListener("click", function() {
-                this.classList.toggle("checked");
-                saveList();
-            });
+// Carregar lista ao iniciar
+document.addEventListener("DOMContentLoaded", loadList);
 
-            let span = li.querySelector("span");
-            if (span) {
-                span.addEventListener("click", function(event) {
-                    event.stopPropagation();
-                    li.remove();
-                    saveList();
-                });
-            }
-        });
-    }
-
-    // Carregar a lista salva ao iniciar
-    loadList();
 </script>
 {% endblock %}

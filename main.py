@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import jsonify
 
 # Definição da aplicação Flask
 app = Flask(__name__)
@@ -46,27 +47,16 @@ class Note(db.Model):
 class Checklist(db.Model):
     __tablename__ = 'checklists'
     
-    id = db.Column(db.Integer, primary_key=True)  # ID único da checklist
-    name = db.Column(db.String(100), nullable=False)  # Nome da checklist
+    id = db.Column(db.Integer, primary_key=True) 
+    name = db.Column(db.String(100), nullable=False) 
+    checked = db.Column(db.Boolean, default=False)  # Status do item (marcado ou não)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Relacionamento com o usuário
     
-    user = db.relationship('User', backref=db.backref('user_checklists', lazy=True))  # Alterado para 'user_checklists'
+    user = db.relationship('User', backref=db.backref('user_checklists', lazy=True))
 
     def __repr__(self):
         return f'<Checklist {self.name}>'
-class ChecklistItem(db.Model):
-    __tablename__ = 'checklist_items'
 
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(255), nullable=False)  # O item da checklist
-    checked = db.Column(db.Boolean, default=False)  # Define se está marcado ou não
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Relacionamento com usuário
-
-    user = db.relationship('User', backref=db.backref('checklist_items', lazy=True))
-
-    def __repr__(self):
-        return f'<ChecklistItem {self.content}>'
-    
 # Modelo para CalendarEvent
 class CalendarEvent(db.Model):
     __tablename__ = 'calendar_events'
@@ -81,7 +71,6 @@ class CalendarEvent(db.Model):
 
     def __repr__(self):
         return f'<Calendar Event {self.title}>'
-
 
 # Cria o banco de dados e as tabelas
 with app.app_context():
@@ -99,7 +88,6 @@ def register():
         flash('E-mail já cadastrado.', 'danger')
         return redirect(url_for('login'))  # Redireciona para a página de login se e-mail já existe
 
-    
     hashed_password = generate_password_hash(password)
 
     new_user = User(name=name, email=email, password=hashed_password)
@@ -185,6 +173,55 @@ def delete_note(note_id):
     
     return redirect(url_for('notes'))
 
+@app.route('/_checklist', methods=['GET'])
+def get_checklist():
+    if 'user_id' not in session:
+        return jsonify({"error": "Usuário não autenticado"}), 401
+    
+    user_id = session['user_id']
+    items = Checklist.query.filter_by(user_id=user_id).all()  # Corrigido para Checklist
+    return jsonify([{"id": item.id, "name": item.name, "checked": item.checked} for item in items])
+
+@app.route('/save_checklist', methods=['POST'])
+def add_checklist_item():
+    if 'user_id' not in session:
+        return jsonify({"error": "Usuário não autenticado"}), 401
+
+    data = request.json
+    new_item = Checklist(name=data['name'], user_id=session['user_id'])
+    db.session.add(new_item)
+    db.session.commit()
+    
+    return jsonify({"id": new_item.id, "name": new_item.name, "checked": new_item.checked}), 201
+
+@app.route('/checklist/<int:item_id>', methods=['PATCH'])
+def toggle_checklist_item(item_id):
+    if 'user_id' not in session:
+        return jsonify({"error": "Usuário não autenticado"}), 401
+
+    item = Checklist.query.get_or_404(item_id)
+    if item.user_id != session['user_id']:
+        return jsonify({"error": "Acesso negado"}), 403
+
+    item.checked = not item.checked  # Alterna entre marcado/desmarcado
+    db.session.commit()
+
+    return jsonify({"id": item.id, "checked": item.checked})
+
+@app.route('/checklist/<int:item_id>', methods=['DELETE'])
+def delete_checklist_item(item_id):
+    if 'user_id' not in session:
+        return jsonify({"error": "Usuário não autenticado"}), 401
+
+    item = Checklist.query.get_or_404(item_id)
+    if item.user_id != session['user_id']:
+        return jsonify({"error": "Acesso negado"}), 403
+
+    db.session.delete(item)
+    db.session.commit()
+    
+    return jsonify({"message": "Item removido"}), 200
+
 # Rota para exibir o calendário
 @app.route('/calendar')
 def calendar():
@@ -201,8 +238,8 @@ def calendar():
     for event in events:
         calendar_events.append({
             'title': event.title,
-            'start': event.start_time.strftime('%Y-%m-%dT%H:%M:%S'),
-            'end': event.end_time.strftime('%Y-%m-%dT%H:%M:%S'),
+            'start': event.date.strftime('%Y-%m-%dT%H:%M:%S'),
+            'end': event.date.strftime('%Y-%m-%dT%H:%M:%S'),
             'description': event.description,
         })
 
