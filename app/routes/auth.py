@@ -42,7 +42,7 @@ def login():
 
         flash('Credenciais inválidas. Tente novamente.', 'danger')
 
-    return render_template('index.html')
+    return render_template('login.html')
 
 @auth_bp.route('/logout')
 def logout():
