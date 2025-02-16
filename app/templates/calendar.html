@@ -1,0 +1,25 @@
+{% extends 'sidebar.html' %}
+
+{% block conteudo %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendarStyle.css') }}">
+
+<div id="calendar"></div>
+
+<script>
+    
+    const events = JSON.parse('{{ events | tojson | safe }}');
+
+    // Inicializa o FullCalendar
+    let calendarEl = document.getElementById('calendar');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth', 
+        events: events 
+    });
+
+    
+    calendar.render();
+</script>
+
+{% endblock conteudo %}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlanIt</title>
+
+    <!-- Ícones do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <img class="logo-img" src="{{ url_for('static', filename='images/user.png') }}" alt="User img" />
+            </header>
+            <nav>
+                <!-- Botão Agenda -->
+                <button data-url="{{ url_for('calendar.calendar_page') }}">
+                    <span>
+                        <i class="material-symbols-outlined">calendar_month</i>
+                        <span>Agenda</span>
+                    </span>
+                </button>
+
+                <!-- Botão Notas -->
+                <button data-url="{{ url_for('notes.notes_page') }}">
+                    <span>
+                        <i class="material-symbols-outlined">edit_note</i>
+                        <span>Notas</span>
+                    </span>
+                </button>
+
+                <!-- Botão Checklist -->
+                <button data-url="{{ url_for('checklist.checklist_page') }}">
+                    <span>
+                        <i class="material-symbols-outlined">checklist</i>
+                        <span>Checklist</span>
+                    </span>
+                </button>
+
+                <!-- Botão Logout -->
+                <button class="logout-button" data-url="{{ url_for('auth.logout') }}">
+                    <span>
+                        <i class="material-symbols-outlined">logout</i>
+                    </span>
+                </button>
+            </nav>
+        </aside>
+
+        
+        {% block conteudo %}
+        {% endblock %}
+    </div>
+
+    
+    <script>
+        // Adiciona eventos de clique aos botões
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll("button[data-url]");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const url = this.getAttribute("data-url");
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

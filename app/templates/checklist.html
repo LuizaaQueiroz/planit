@@ -1,0 +1,96 @@
+{% extends 'sidebar.html' %}
+
+{% block conteudo %}
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checklistStyle.css') }}">
+
+<div class="container">
+    <div class="todo-app">
+        <span>
+            <h2>Checklist <i class="material-symbols-outlined">checklist_rtl</i></h2>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Adicionar">
+                <button onclick="addTask()">Salvar</button>
+            </div>
+            <ul id="list-container"></ul>
+        </span>
+    </div>
+</div>
+
+<script>
+const inputBox = document.getElementById("input-box");
+const listContainer = document.getElementById("list-container");
+
+// Carregar checklist do backend
+async function loadList() {
+    const response = await fetch('{{ url_for("checklist.get_checklist") }}');
+    const data = await response.json();
+    listContainer.innerHTML = "";
+
+    data.forEach(item => {
+        let li = document.createElement("li");
+        li.innerHTML = item.name;
+        li.dataset.id = item.id;
+
+        if (item.checked) {
+            li.classList.add("checked");
+        }
+
+        // Marcar/desmarcar ao clicar
+        li.addEventListener("click", async function() {
+            await toggleTask(item.id);
+            li.classList.toggle("checked");
+        });
+
+        // Criar botão de excluir
+        let span = document.createElement("span");
+        span.innerHTML = "\u00d7"; // "×"
+        span.classList.add("close");
+        span.addEventListener("click", async function(event) {
+            event.stopPropagation(); // Evita que clique no "×" marque a tarefa
+            await deleteTask(item.id);
+            li.remove();
+        });
+
+        li.appendChild(span);
+        listContainer.appendChild(li);
+    });
+}
+
+// Adicionar nova tarefa
+async function addTask() {
+    if (inputBox.value.trim() === '') {
+        alert("Preencha o campo");
+        return;
+    }
+
+    const response = await fetch('{{ url_for("checklist.add_checklist_item") }}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name: inputBox.value})
+    });
+
+    if (response.ok) {
+        inputBox.value = "";
+        loadList();
+    }
+}
+
+// Alternar item marcado/desmarcado
+async function toggleTask(id) {
+    await fetch(`{{ url_for("checklist.toggle_checklist_item", item_id=0) }}`.replace("0", id), {
+        method: 'PATCH'
+    });
+}
+
+// Excluir tarefa
+async function deleteTask(id) {
+    await fetch(`{{ url_for("checklist.delete_checklist_item", item_id=0) }}`.replace("0", id), {
+        method: 'DELETE'
+    });
+}
+
+// Carregar lista ao iniciar
+document.addEventListener("DOMContentLoaded", loadList);
+</script>
+{% endblock %}
