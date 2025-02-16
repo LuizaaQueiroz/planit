@@ -9,7 +9,7 @@
         <p>Adicionar nota</p>
     </li>
 
-    <!-- Lista de notas armazenadas no banco -->
+
     {% for note in notes %}
     {% if note.user_id == session['user_id'] %}
     <li class="note">
@@ -102,16 +102,16 @@
 
         // Submissão do formulário de edição
         document.getElementById("editForm").addEventListener("submit", function (event) {
-            event.preventDefault(); // Impede o comportamento padrão do formulário (recarregar a página)
+            event.preventDefault(); 
 
             const formData = new FormData(this);
             fetch(`{{ url_for('notes.edit_note', note_id=0) }}`.replace("0", selectedNoteId), {
                 method: 'POST',
-                body: formData // Envia os dados do formulário para a rota do Flask
+                body: formData 
             }).then(response => {
                 if (response.ok) {
-                    closeEditModal(); // Fecha o modal após salvar as alterações
-                    window.location.reload(); // Recarrega a página para refletir as mudanças
+                    closeEditModal(); 
+                    window.location.reload(); 
                 }
             }).catch(error => {
                 console.error('Erro ao editar a nota:', error);

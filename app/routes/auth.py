@@ -21,7 +21,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
-        flash('Cadastro realizado com sucesso! Faça login.', 'success')
+        flash('Cadastro realizado com sucesso! Faça login.', 'register_success')
         return redirect(url_for('auth.login'))
 
     return render_template('register.html')
@@ -40,7 +40,7 @@ def login():
             flash(f'Bem-vindo, {user.name}!', 'success')
             return redirect(url_for('calendar.calendar_page'))
 
-        flash('Credenciais inválidas. Tente novamente.', 'danger')
+        flash('Credenciais inválidas. Tente novamente.', 'login_error')
 
     return render_template('login.html')
 
@@ -48,5 +48,4 @@ def login():
 def logout():
     session.pop('user_id', None)
     session.pop('user_name', None)
-    flash('Você saiu da sua conta.', 'info')
     return redirect(url_for('auth.login'))

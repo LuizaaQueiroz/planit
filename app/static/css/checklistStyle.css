@@ -86,7 +86,7 @@ ul li::before {
   }
   
   ul li.checked::before {
-      background-image: url(image/check_circle_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png);
+      background-image: url(image/check.png);
   }
   
   ul li span{

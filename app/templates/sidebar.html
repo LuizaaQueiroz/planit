@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanIt</title>
 
-    <!-- Ícones do Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
-    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -16,7 +14,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <header class="sidebar-header">
-                <img class="logo-img" src="{{ url_for('static', filename='images/user.png') }}" alt="User img" />
+                <img class="logo-img" src="{{ url_for('static', filename='css/image/user.png') }}" alt="User img" />
             </header>
             <nav>
                 <!-- Botão Agenda -->
@@ -59,7 +57,7 @@
 
     
     <script>
-        // Adiciona eventos de clique aos botões
+        // adiciona eventos de clique aos botões
         document.addEventListener("DOMContentLoaded", function () {
             const buttons = document.querySelectorAll("button[data-url]");
 

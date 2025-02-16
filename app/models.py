@@ -1,4 +1,5 @@
-from .extensions import db  # Importe o db de extensions.py
+#modelos de bd
+from .extensions import db  
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
