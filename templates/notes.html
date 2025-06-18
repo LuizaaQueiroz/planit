@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Notas{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📝 Minhas Notas</h2>
+
+<!-- Botão para criar nova nota -->
+<a href="{{ url_for('create_note') }}" class="btn btn-add pastel mb-3" accesskey="n">+ Nova Nota (Alt+N)</a>
+
+<div class="list-group">
+    {% for note in notes %}
+    <div class="list-group-item rounded shadow-sm mb-2">
+        <p>{{ note.content }}</p>
+        <!-- Botão excluir com accesskey -->
+        <a href="{{ url_for('delete_note', id=note.id) }}" class="btn btn-outline-danger btn-sm" accesskey="a">🗑️ Excluir (Alt+A)</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

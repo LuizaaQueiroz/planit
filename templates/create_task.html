@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Tarefas{% endblock %}
+
+{% block content %}
+   
+<main class="container my-4">
+    <h2>+ Nova Tarefa</h2>
+
+    <form method="POST" class="bg-white p-4 rounded shadow-sm">
+        <div class="mb-3">
+        <label for="title" class="form-label">Título</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Descrição</label>
+        <textarea class="form-control" id="description" name="description"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="due_date" class="form-label">Data da Tarefa</label>
+        <input type="date" class="form-control" id="due_date" name="due_date">
+    </div>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    </form>
+</main>
+
+ {% endblock %}
+

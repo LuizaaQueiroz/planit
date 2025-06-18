@@ -1,0 +1,360 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;  /* TORNANDO A FONTE MAIS GROSSA */
+    background-color: #f9fefc;
+    color: #333;
+}
+
+
+
+.logo-gradient {
+    background: linear-gradient(90deg, #43a047, #66bb6a);
+    
+    /* Suporte a navegadores baseados em WebKit (Chrome, Safari, Edge) */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Firefox (uso experimental, menos suportado) */
+    background-clip: text;
+    color: transparent;
+
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: inline-block;
+}
+
+h2, h5 {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.card,
+.list-group-item,
+form {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e0e0e0;
+}
+
+input.form-control,
+textarea.form-control {
+    border-radius: 10px;
+}
+
+.btn-success {
+    background-color: #2e7d32;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+
+.btn-secondary {
+    border-radius: 10px;
+}
+
+.list-group-item {
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    border-radius: 8px;
+    border-color: #2e7d32;
+}
+
+.form-check-input:checked {
+    background-color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+/* ------------------- */
+/* Verde pastel no topo (header + nav) */
+.pastel-header {
+    background-color: #e0f4e0; /* Verde pastel */
+}
+
+/* Link ativo no menu */
+.nav-pastel-active {
+    background-color: #c6eac6;
+    color: #2e7d32;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 6px 12px;
+}
+
+/* Links padrão do menu */
+.nav-link-pastel {
+    color: #2e7d32 !important;
+    font-weight: 700;   /* Deixa o menu mais encorpado */
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+
+/* Avatar de usuário no header */
+.user-avatar {
+    background-color: #c6eac6;
+    color: #2e7d32;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: inline-block;
+}
+
+/* Botão "+ Nova Tarefa" (verde escuro arredondado) */
+.btn-add.pastel {
+    background-color: #2e7d32;
+    color: white;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-add.pastel:hover {
+    background-color: #256d27;
+    color: white;
+}
+
+/* Progresso da tarefa */
+.progress-bar.bg-success {
+    background-color: #2e7d32;
+}
+/* Fundo geral do header (verde pastel claro) */
+.pastel-header {
+    background-color: #e0f4e0; /* Verde pastel claro */
+}
+
+/* Linha da navbar (faixa um pouco mais escura) */
+nav.pastel-header {
+    background-color: #c6eac6; /* Tom um pouco mais escuro que o header */
+}
+
+/* Avatar de usuário */
+.user-avatar {
+    background-color: #c6eac6;
+    color: #2e7d32;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+/* Links padrão do menu */
+.nav-link-pastel {
+    color: #2e7d32 !important;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+/* Aba ativa */
+.active-nav {
+    background-color: #b5dfb5;
+    color: #2e7d32 !important;
+    font-weight: 800;  /* A aba ativa fica ainda mais forte */
+}
+
+/* Hover dos links */
+.nav-link-pastel:hover {
+    background-color: #d7f0d7;
+    color: #2e7d32 !important;
+    text-decoration: none;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-header {
+    font-weight: bold;
+    text-align: center;
+    padding: 8px;
+    background-color: #e0f2f1;
+    border-radius: 5px;
+}
+
+.calendar-cell {
+    border: 1px solid #ddd;
+    min-height: 80px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #fefefe;
+}
+
+.calendar-cell.has-task {
+    background-color: #e8f5e9;
+    border-color: #66bb6a;
+}
+
+.calendar-cell.empty {
+    background-color: transparent;
+    border: none;
+}
+
+.task-list {
+    padding-left: 12px;
+    margin-top: 5px;
+    font-size: 0.8rem;
+}
+
+.date-number {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+.calendar-cell {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #f9fefc;
+    position: relative;
+}
+
+.calendar-cell.active {
+    transform: scale(1.2);
+    z-index: 10;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #e8f5e9; /* Tom pastel */
+}
+
+/* Eventos sempre visíveis */
+.calendar-cell .event-list {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+/* Só a lixeira continua escondida por padrão */
+.calendar-cell .delete-event {
+    display: none;
+}
+
+.calendar-cell.active .delete-event {
+    display: inline;
+}
+
+.calendar-cell .delete-event {
+    display: none;
+}
+
+.calendar-cell.active .delete-event {
+    display: inline;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+/* Link dos dias do calendário (número do dia) */
+.calendar-cell .date-number a {
+    color: #2e7d32;             
+    text-decoration: none;        
+    font-weight: 600;             
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.calendar-cell .date-number a:hover {
+    background-color: #d7f0d7;    
+    text-decoration: none;
+    color: #1b5e20;               
+}
+/* Cabeçalho dos dias da semana no calendário */
+.calendar-header {
+    background-color: #c6eac6;
+    color: #2e7d32;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Cada célula (dia) */
+.calendar-cell {
+    background-color: #ffffff;
+    border: 1px solid #c8e6c9;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 90px;
+    text-align: left;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calendar-cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Número do dia */
+.calendar-cell .date-number {
+    color: #2e7d32;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+/* Dias com eventos */
+.calendar-cell.has-event {
+    background-color: #e8f5e9;
+    border-color: #66bb6a;
+}
+
+/* Expandida (zoom ao clicar) */
+.calendar-cell.active {
+    transform: scale(1.15);
+    z-index: 20;
+    background-color: #d0f0d3;
+}
+
+/* Lista de eventos dentro da célula */
+.event-list li {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    color: #1b5e20;
+}
+
+.delete-event {
+    color: #c62828;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Botão de exportar PDF */
+.btn-export-pdf {
+    background-color: #2e7d32;
+    color: white;
+    border-radius: 10px;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.btn-export-pdf:hover {
+    background-color: #1b5e20;
+    color: white;
+}
+.calendar-cell.today {
+    background-color: #d0f0d3;  /* Verde pastel para o dia de hoje */
+    border: 2px solid #2e7d32;
+}
+
+/* Remover zoom ao clicar fora */
+.calendar-cell.active {
+    transform: scale(1.2);
+    z-index: 10;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #e8f5e9;
+    position: relative;
+}
+

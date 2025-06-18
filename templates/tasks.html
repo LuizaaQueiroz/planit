@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Tarefas{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📋 Minhas Tarefas</h2>
+
+<!-- Gavetinha de Filtros -->
+<div class="dropdown mb-3">
+    <button class="btn btn-outline-success dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Filtrar por status
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+        <li><a class="dropdown-item" href="{{ url_for('list_tasks') }}">Todas</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('list_tasks', status='pendentes') }}">Pendentes</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('list_tasks', status='concluidas') }}">Concluídas</a></li>
+    </ul>
+</div>
+
+<!-- Botões principais -->
+<div class="d-flex gap-2 mb-3">
+    <a href="{{ url_for('generate_tasks_pdf') }}" class="btn btn-success" accesskey="p">📄 Exportar PDF (Alt+P)</a>
+    <a href="{{ url_for('create_task') }}" class="btn btn-add pastel" accesskey="n">+ Nova Tarefa (Alt+N)</a>
+</div>
+
+<!-- Lista de Tarefas -->
+<div class="row g-3">
+    {% for task in tasks %}
+    <div class="col-md-4">
+        <div class="card shadow-sm rounded">
+            <div class="card-body">
+                <h5 class="card-title">{{ task.title }}</h5>
+                <p>{{ task.description }}</p>
+                <p>Status: <strong>{{ task.status }}</strong></p>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('complete_task', id=task.id) }}" class="btn btn-outline-success btn-sm" accesskey="q">Concluir (Alt+Q)</a>
+                    <a href="{{ url_for('delete_task', id=task.id) }}" class="btn btn-outline-danger btn-sm" accesskey="a">Excluir (Alt+A)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>Nenhuma tarefa encontrada para este filtro.</p>
+    {% endfor %}
+</div>
+{% endblock %}
