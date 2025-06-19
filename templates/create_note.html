@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
-
-{% block title %}Nova Nota{% endblock %}
+{% block title %}{{ _('Nova Nota') }}{% endblock %}
 
 {% block content %}
-<h2>✏️ Nova Nota</h2>
+<h2>{{ _('+ Nova Nota') }}</h2>
 
-<form method="POST">
+<form method="POST" class="bg-white p-4 rounded shadow-sm">
     <div class="mb-3">
-        <label for="content" class="form-label">Conteúdo:</label>
-        <textarea id="content" name="content" class="form-control" required></textarea>
+        <label for="content" class="form-label">{{ _('Conteúdo da Nota') }}</label>
+        <textarea class="form-control" id="content" name="content" required></textarea>
     </div>
-
-    <button type="submit" class="btn btn-success">Salvar</button>
+    <button type="submit" class="btn btn-success">{{ _('Salvar') }}</button>
 </form>
 {% endblock %}

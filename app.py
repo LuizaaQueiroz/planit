@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, session
+from flask_babelex import Babel, gettext as _
 from models import db, User, Task, Note, Event
 from datetime import datetime
 from xhtml2pdf import pisa
@@ -6,20 +7,37 @@ from io import BytesIO
 import calendar
 
 app = Flask(__name__)
+
+# Configuração Básica
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///planit.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'your_secret_key'
 
+# Configuração de idiomas
+app.config['BABEL_DEFAULT_LOCALE'] = 'pt'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['pt', 'en', 'es']
+
+babel = Babel(app)
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
 
+# -------- Internacionalização --------
+@babel.localeselector
+def get_locale():
+    return session.get('lang', 'pt')
+
+@app.route('/set_language/<lang_code>')
+def set_language(lang_code):
+    if lang_code in ['pt', 'en', 'es']:
+        session['lang'] = lang_code
+    return redirect(request.referrer or url_for('dashboard'))
+
 # -------- Dashboard --------
 @app.route('/')
 def dashboard():
     user_id = 1
-
     total_tasks = Task.query.filter_by(user_id=user_id).count()
     completed_tasks = Task.query.filter_by(user_id=user_id, status='Concluída').count()
     percent = int((completed_tasks / total_tasks) * 100) if total_tasks > 0 else 0
@@ -30,7 +48,6 @@ def dashboard():
     ).order_by(Task.due_date.asc().nullslast()).limit(5).all()
 
     notes_count = Note.query.filter_by(user_id=user_id).count()
-
     today = datetime.today().date()
     upcoming_tasks = Task.query.filter(
         Task.user_id == user_id,
@@ -136,23 +153,20 @@ def delete_note(id):
     db.session.commit()
     return redirect(url_for('list_notes'))
 
-# -------- Calendar Redirect --------
+# -------- Calendar --------
 @app.route('/calendar')
 def calendar_redirect():
     today = datetime.today()
     return redirect(url_for('calendar_view', year=today.year, month=today.month))
 
-# -------- Calendar View --------
 @app.route('/calendar/<int:year>/<int:month>')
 def calendar_view(year, month):
     user_id = 1
-
     if month < 1 or month > 12:
         return redirect(url_for('calendar_redirect'))
 
     cal = calendar.Calendar()
     month_days = list(cal.itermonthdays(year, month))
-
     month_start = datetime(year, month, 1)
     month_end = datetime(year + (month // 12), (month % 12) + 1, 1)
 
@@ -192,7 +206,6 @@ def calendar_view(year, month):
     prev_year = year - 1 if month == 1 else year
     next_month = month + 1 if month < 12 else 1
     next_year = year + 1 if month == 12 else year
-
     current_date = datetime.today()
 
     return render_template(
@@ -209,7 +222,6 @@ def calendar_view(year, month):
         current_date=current_date
     )
 
-# -------- Criar evento --------
 @app.route('/events/create/<int:year>/<int:month>/<int:day>', methods=['GET', 'POST'])
 def create_event_for_day(year, month, day):
     user_id = 1
@@ -223,7 +235,6 @@ def create_event_for_day(year, month, day):
         return redirect(url_for('calendar_view', year=year, month=month))
     return render_template('create_event_for_day.html', year=year, month=month, day=day)
 
-# -------- Excluir evento --------
 @app.route('/events/delete/<int:id>')
 def delete_event(id):
     event = Event.query.get_or_404(id)
@@ -232,6 +243,9 @@ def delete_event(id):
     db.session.delete(event)
     db.session.commit()
     return redirect(url_for('calendar_view', year=target_year, month=target_month))
+@app.context_processor
+def inject_get_locale():
+    return dict(get_locale=get_locale)
 
 if __name__ == '__main__':
     app.run(debug=True)

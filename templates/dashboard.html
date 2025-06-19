@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-
-{% block title %}Dashboard{% endblock %}
+{% block title %}{{ _('Dashboard') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-end mb-3">
-    <a href="{{ url_for('create_task') }}" class="btn btn-add pastel">+ Nova Tarefa</a>
+    <a href="{{ url_for('create_task') }}" class="btn btn-add pastel" accesskey="n">+ {{ _('Nova Tarefa') }}</a>
 </div>
 
 <div class="row g-4">
@@ -12,54 +11,55 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Tarefas</h5>
+                <h5 class="card-title">{{ _('Tarefas') }}</h5>
                 <div class="progress mb-2" style="height: 20px;">
                     <div class="progress-bar bg-success" style="width: {{ percent }}%;">{{ percent }}%</div>
                 </div>
-                <p>{{ completed_tasks }} de {{ total_tasks }} tarefas concluídas</p>
-                <a href="{{ url_for('list_tasks') }}" class="btn btn-success btn-sm">Ver todas</a>
+                <p>{{ completed_tasks }} {{ _('de') }} {{ total_tasks }} {{ _('tarefas concluídas') }}</p>
+                <a href="{{ url_for('list_tasks') }}" class="btn btn-success btn-sm" accesskey="t">{{ _('Ver todas') }}</a>
             </div>
         </div>
     </div>
 
-<!-- Notas Card -->
-<div class="col-md-4">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Notas</h5>
-            <p>Você tem {{ notes_count }} notas salvas</p>
-            <div class="note-icons d-flex gap-2">
-                <span class="icon1">🖊️</span>
-                <span class="icon2">📄</span>
-                <span class="icon3">💬</span>
+    <!-- Notas Card -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ _('Notas') }}</h5>
+                <p>{{ _('Você tem') }} {{ notes_count }} {{ _('notas salvas') }}</p>
+                <div class="note-icons d-flex gap-2">
+                    <span class="icon1">🖊️</span>
+                    <span class="icon2">📄</span>
+                    <span class="icon3">💬</span>
+                </div>
+                <a href="{{ url_for('list_notes') }}" class="btn btn-success btn-sm mt-2" accesskey="o">{{ _('Ver todas') }}</a>
             </div>
-            <a href="{{ url_for('list_notes') }}" class="btn btn-success btn-sm mt-2">Ver todas</a>
+        </div>
+    </div>
+
+    <!-- Calendário Card -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ _('Calendário') }}</h5>
+                <ul class="list-unstyled">
+                    {% for task in upcoming_tasks %}
+                    <li>🟢 {{ task.title }} – {{ task.due_date.strftime('%H:%M') if task.due_date }}</li>
+                    {% endfor %}
+                    {% if upcoming_tasks|length == 0 %}
+                    <li>{{ _('Sem eventos próximos.') }}</li>
+                    {% endif %}
+                </ul>
+                <a href="{{ url_for('calendar_redirect') }}" class="btn btn-success btn-sm" accesskey="c">{{ _('Ver calendário') }}</a>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Calendário Card -->
-<div class="col-md-4">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Calendário</h5>
-            <ul class="list-unstyled">
-                {% for task in upcoming_tasks %}
-                <li>🟢 {{ task.title }} – {{ task.due_date.strftime('%H:%M') if task.due_date }}</li>
-                {% endfor %}
-                {% if upcoming_tasks|length == 0 %}
-                <li>Sem eventos próximos.</li>
-                {% endif %}
-            </ul>
-            <a href="{{ url_for('calendar_redirect') }}" class="btn btn-success btn-sm">Ver calendário</a>
-        </div>
-    </div>
-</div>
-   
 <!-- Tarefas Recentes -->
 <div class="card mt-4">
     <div class="card-body">
-        <h5 class="card-title">Tarefas Recentes</h5>
+        <h5 class="card-title">{{ _('Tarefas Recentes') }}</h5>
         {% if recent_tasks %}
         <ul class="list-group list-group-flush">
             {% for task in recent_tasks %}
@@ -76,14 +76,14 @@
                     {% if task.due_date %}
                         {{ task.due_date.strftime('%d/%m/%Y') }}
                     {% else %}
-                        Sem data
+                        {{ _('Sem data') }}
                     {% endif %}
                 </span>
             </li>
             {% endfor %}
         </ul>
         {% else %}
-        <p>Nenhuma tarefa recente pendente.</p>
+        <p>{{ _('Nenhuma tarefa recente pendente.') }}</p>
         {% endif %}
     </div>
 </div>

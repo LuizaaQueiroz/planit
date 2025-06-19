@@ -1,0 +1,67 @@
+# Portuguese translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-06-18 20:39-0300\n"
+"PO-Revision-Date: 2025-06-18 20:39-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt\n"
+"Language-Team: pt <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: templates/dashboard.html:5
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/dashboard.html:12
+msgid "Nova Tarefa"
+msgstr "Nova Tarefa"
+
+#: templates/dashboard.html:20
+msgid "Tarefas"
+msgstr "Tarefas"
+
+#: templates/dashboard.html:25
+msgid "Ver todas"
+msgstr "Ver todas"
+
+#: templates/dashboard.html:35
+msgid "Notas"
+msgstr "Notas"
+
+#: templates/dashboard.html:37
+msgid "Você tem"
+msgstr "Você tem"
+
+#: templates/dashboard.html:37
+msgid "notas salvas"
+msgstr "notas salvas"
+
+#: templates/dashboard.html:49
+msgid "Calendário"
+msgstr "Calendário"
+
+#: templates/dashboard.html:55
+msgid "Sem eventos próximos."
+msgstr "Sem eventos próximos."
+
+#: templates/dashboard.html:61
+msgid "Tarefas Recentes"
+msgstr "Tarefas Recentes"
+
+#: templates/dashboard.html:76
+msgid "Sem data"
+msgstr "Sem data"
+
+#: templates/dashboard.html:81
+msgid "Nenhuma tarefa recente pendente."
+msgstr "Nenhuma tarefa recente pendente."

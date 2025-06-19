@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
-
-{% block title %}Novo Evento{% endblock %}
+{% block title %}{{ _('Novo Evento') }}{% endblock %}
 
 {% block content %}
-<h2>Novo Evento para {{ day }}/{{ month }}/{{ year }}</h2>
+<h2>{{ _('Novo Evento para') }} {{ day }}/{{ month }}/{{ year }}</h2>
 
-<form method="POST">
+<form method="POST" class="bg-white p-4 rounded shadow-sm">
     <div class="mb-3">
-        <label for="title" class="form-label">Título do Evento:</label>
+        <label for="title" class="form-label">{{ _('Título do Evento') }}</label>
         <input type="text" name="title" id="title" class="form-control" required>
     </div>
     <div class="mb-3">
-        <label for="time" class="form-label">Horário:</label>
+        <label for="time" class="form-label">{{ _('Horário') }}</label>
         <input type="time" name="time" id="time" class="form-control">
     </div>
-    <button type="submit" class="btn btn-success">Salvar Evento</button>
+    <button type="submit" class="btn btn-success">{{ _('Salvar Evento') }}</button>
 </form>
 {% endblock %}

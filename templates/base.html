@@ -1,59 +1,48 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ get_locale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanIt - {% block title %}{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Bootstrap e Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
-
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <!-- Bootstrap JS (Dropdown e outros componentes precisam) -->
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
-<!-- Header comum -->
 <header class="d-flex justify-content-between align-items-center p-3 pastel-header shadow-sm">
-    <div class="d-flex align-items-center gap-2">
-        <!-- Novo ícone + PlanIt com gradiente -->
-        <div class="logo-gradient">PlanIt</div>
-    </div>
-    <div class="d-flex align-items-center gap-2">
-        <span>Hoje:</span>
-        <div class="user-avatar">👤 Usuário</div>
+    <div class="logo-gradient">PlanIt</div>
+    <div class="d-flex align-items-center gap-3">
+        <div class="user-avatar">👤 {{ _('Usuário') }}</div>
+
+        <div class="dropdown">
+            <button class="btn btn-outline-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                🌐 {{ _('Idioma') }}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ url_for('set_language', lang_code='pt') }}">🇧🇷 Português</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('set_language', lang_code='en') }}">🇺🇸 English</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('set_language', lang_code='es') }}">🇪🇸 Español</a></li>
+            </ul>
+        </div>
     </div>
 </header>
 
 <nav class="pastel-navbar border-bottom">
     <ul class="nav container py-2">
-        <li class="nav-item">
-            <a class="nav-link nav-link-pastel {% if request.path == '/' %}active-nav{% endif %}" href="{{ url_for('dashboard') }}">
-                <i class="bi bi-house-door"></i> Dashboard
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-pastel {% if '/tasks' in request.path %}active-nav{% endif %}" href="{{ url_for('list_tasks') }}">
-                <i class="bi bi-list-task"></i> Tarefas
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-pastel {% if '/notes' in request.path %}active-nav{% endif %}" href="{{ url_for('list_notes') }}">
-                <i class="bi bi-pencil-square"></i> Notas
-            </a>
-        </li>
-        <li class="nav-item">
-    <a class="nav-link nav-link-pastel {% if '/calendar' in request.path %}active-nav{% endif %}" href="{{ url_for('calendar_redirect') }}">
-        <i class="bi bi-calendar-event"></i> Calendário
-    </a>
-    </li>
-
+        <li class="nav-item"><a class="nav-link nav-link-pastel {% if request.path == '/' %}active-nav{% endif %}" href="{{ url_for('dashboard') }}"><i class="bi bi-house-door"></i> {{ _('Dashboard') }}</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-pastel {% if '/tasks' in request.path %}active-nav{% endif %}" href="{{ url_for('list_tasks') }}"><i class="bi bi-list-task"></i> {{ _('Tarefas') }}</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-pastel {% if '/notes' in request.path %}active-nav{% endif %}" href="{{ url_for('list_notes') }}"><i class="bi bi-pencil-square"></i> {{ _('Notas') }}</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-pastel {% if '/calendar' in request.path %}active-nav{% endif %}" href="{{ url_for('calendar_redirect') }}"><i class="bi bi-calendar-event"></i> {{ _('Calendário') }}</a></li>
     </ul>
 </nav>
-<!-- Conteúdo Principal -->
+
 <main class="container my-4">
     {% block content %}{% endblock %}
 </main>

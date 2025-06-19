@@ -1,25 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}Calendário{% endblock %}
+{% block title %}{{ _('Calendário') }}{% endblock %}
 
 {% block content %}
-<h2>{{ month_name }} {{ year }}</h2>
+<h2>{{ _(month_name) }} {{ year }}</h2>
 
 <!-- Navegação de meses -->
 <div class="mb-3 d-flex gap-2">
-    <a href="{{ url_for('calendar_view', year=prev_year, month=prev_month) }}" class="btn btn-outline-success btn-sm" accesskey="n">← Mês Anterior (Alt+N)</a>
-    <a href="{{ url_for('calendar_view', year=next_year, month=next_month) }}" class="btn btn-outline-success btn-sm" accesskey="m">Próximo Mês (Alt+M) →</a>
+    <a href="{{ url_for('calendar_view', year=prev_year, month=prev_month) }}" class="btn btn-outline-success btn-sm mes-anterior" accesskey="n">← {{ _('Mês Anterior') }} (Alt+N)</a>
+    <a href="{{ url_for('calendar_view', year=next_year, month=next_month) }}" class="btn btn-outline-success btn-sm proximo-mes" accesskey="m">{{ _('Próximo Mês') }} (Alt+M) →</a>
 </div>
 
-<!-- Grid do Calendário -->
+<!-- Cabeçalhos dos dias da semana -->
 <div class="calendar-grid">
-    <div class="calendar-header">Dom</div>
-    <div class="calendar-header">Seg</div>
-    <div class="calendar-header">Ter</div>
-    <div class="calendar-header">Qua</div>
-    <div class="calendar-header">Qui</div>
-    <div class="calendar-header">Sex</div>
-    <div class="calendar-header">Sáb</div>
+    {% set weekday_labels = [_('Dom'), _('Seg'), _('Ter'), _('Qua'), _('Qui'), _('Sex'), _('Sáb')] %}
+    {% for day_label in weekday_labels %}
+        <div class="calendar-header">{{ day_label }}</div>
+    {% endfor %}
 
     {% set today_day = current_date.day %}
     {% set today_month = current_date.month %}
@@ -30,18 +27,15 @@
             <div class="calendar-cell empty"></div>
         {% else %}
             {% set is_today = (day == today_day and month == today_month and year == today_year) %}
-            <div class="calendar-cell {% if day in events_by_day %}has-event{% endif %} {% if is_today %}today{% endif %}" onclick="toggleActive(this)">
-
-                <!-- Número da Data (clicável para criar evento) -->
-                <div class="date-number">
+            <div class="calendar-cell {% if day in events_by_day %}tem-evento{% endif %} {% if is_today %}hoje{% endif %}" onclick="toggleActive(this)">
+                <div class="numero-dia">
                     <a href="{{ url_for('create_event_for_day', year=year, month=month, day=day) }}" class="text-success fw-bold text-decoration-none">
                         {{ day }}
                     </a>
                 </div>
 
-                <!-- Lista de Eventos/Tarefas do Dia -->
                 {% if day in events_by_day %}
-                    <ul class="event-list p-0 mt-2" style="list-style: none;">
+                    <ul class="lista-eventos p-0 mt-2" style="list-style: none;">
                         {% for item in events_by_day[day] %}
                             <li class="small d-flex justify-content-between">
                                 <span>
@@ -53,7 +47,7 @@
                                 </span>
 
                                 {% if item.type == 'event' %}
-                                    <a href="{{ url_for('delete_event', id=item.id) }}" class="text-danger text-decoration-none small ms-2 delete-event" onclick="return confirm('Excluir este evento?');">🗑️</a>
+                                    <a href="{{ url_for('delete_event', id=item.id) }}" class="text-danger text-decoration-none small ms-2 delete-event" onclick="return confirm('{{ _('Excluir este evento?') }}');">🗑️</a>
                                 {% endif %}
                             </li>
                         {% endfor %}
@@ -64,22 +58,16 @@
     {% endfor %}
 </div>
 
-<!-- Script: Remover o zoom ao clicar fora -->
 <script>
-    function toggleActive(cell) {
-        document.querySelectorAll('.calendar-cell.active').forEach(function(el) {
-            el.classList.remove('active');
-        });
-        cell.classList.add('active');
-    }
+function toggleActive(cell) {
+    document.querySelectorAll('.calendar-cell.active').forEach(el => el.classList.remove('active'));
+    cell.classList.add('active');
+}
 
-    document.addEventListener('click', function(event) {
-        const isCalendarCell = event.target.closest('.calendar-cell');
-        if (!isCalendarCell) {
-            document.querySelectorAll('.calendar-cell.active').forEach(function(el) {
-                el.classList.remove('active');
-            });
-        }
-    });
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.calendar-cell')) {
+        document.querySelectorAll('.calendar-cell.active').forEach(el => el.classList.remove('active'));
+    }
+});
 </script>
 {% endblock %}

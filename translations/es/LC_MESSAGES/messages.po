@@ -1,0 +1,201 @@
+# Spanish translations for PlanIt project
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PlanIt project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PlanIt 1.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-06-19 00:00-0300\n"
+"PO-Revision-Date: 2025-06-19 00:00-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+# --- Dashboard ---
+msgid "Dashboard"
+msgstr "Inicio"
+
+msgid "Nova Tarefa"
+msgstr "Nueva Tarea"
+
+msgid "Tarefas"
+msgstr "Tareas"
+
+msgid "Ver todas"
+msgstr "Ver todas"
+
+msgid "Notas"
+msgstr "Notas"
+
+msgid "Você tem"
+msgstr "Tienes"
+
+msgid "notas salvas"
+msgstr "notas guardadas"
+
+msgid "Calendário"
+msgstr "Calendario"
+
+msgid "Sem eventos próximos."
+msgstr "Sin eventos próximos."
+
+msgid "Tarefas Recentes"
+msgstr "Tareas Recientes"
+
+msgid "Sem data"
+msgstr "Sin fecha"
+
+msgid "Nenhuma tarefa recente pendente."
+msgstr "Ninguna tarea reciente pendiente."
+
+msgid "Hoje:"
+msgstr "Hoy:"
+
+msgid "Usuário"
+msgstr "Usuario"
+
+msgid "Idioma"
+msgstr "Idioma"
+
+msgid "Ver calendário"
+msgstr "Ver calendario"
+
+msgid "de"
+msgstr "de"
+
+msgid "tarefas concluídas"
+msgstr "tareas completadas"
+
+# --- Tasks ---
+msgid "Minhas Tarefas"
+msgstr "Mis Tareas"
+
+msgid "Filtrar por status"
+msgstr "Filtrar por estado"
+
+msgid "Todas"
+msgstr "Todas"
+
+msgid "Pendentes"
+msgstr "Pendientes"
+
+msgid "Concluídas"
+msgstr "Completadas"
+
+msgid "Exportar PDF"
+msgstr "Exportar PDF"
+
+msgid "Concluir"
+msgstr "Completar"
+
+msgid "Excluir"
+msgstr "Eliminar"
+
+msgid "Nenhuma tarefa encontrada para este filtro."
+msgstr "No se encontraron tareas para este filtro."
+
+msgid "Descrição"
+msgstr "Descripción"
+
+msgid "Data da Tarefa"
+msgstr "Fecha de la Tarea"
+
+msgid "Salvar"
+msgstr "Guardar"
+
+# --- Notes ---
+msgid "Minhas Notas"
+msgstr "Mis Notas"
+
+msgid "Nova Nota"
+msgstr "Nueva Nota"
+
+msgid "Excluir esta nota?"
+msgstr "¿Eliminar esta nota?"
+
+# --- Calendar ---
+msgid "Criar Evento"
+msgstr "Crear Evento"
+
+msgid "Excluir este evento?"
+msgstr "¿Eliminar este evento?"
+
+msgid "Próximo Mês"
+msgstr "Mes Siguiente"
+
+msgid "Mês Anterior"
+msgstr "Mes Anterior"
+
+msgid "Dom"
+msgstr "Dom"
+
+msgid "Seg"
+msgstr "Lun"
+
+msgid "Ter"
+msgstr "Mar"
+
+msgid "Qua"
+msgstr "Mié"
+
+msgid "Qui"
+msgstr "Jue"
+
+msgid "Sex"
+msgstr "Vie"
+
+msgid "Sáb"
+msgstr "Sáb"
+
+msgid "Título do Evento:"
+msgstr "Título del Evento:"
+
+msgid "Horário:"
+msgstr "Hora:"
+
+msgid "Salvar Evento"
+msgstr "Guardar Evento"
+
+# --- Flash Messages and Status ---
+msgid "Tarefa criada com sucesso!"
+msgstr "¡Tarea creada con éxito!"
+
+msgid "Evento criado com sucesso!"
+msgstr "¡Evento creado con éxito!"
+
+msgid "Nota criada com sucesso!"
+msgstr "¡Nota creada con éxito!"
+
+msgid "Tarefa excluída com sucesso!"
+msgstr "¡Tarea eliminada con éxito!"
+
+msgid "Evento excluído com sucesso!"
+msgstr "¡Evento eliminado con éxito!"
+
+msgid "Nota excluída com sucesso!"
+msgstr "¡Nota eliminada con sucesso!"
+
+msgid "Filtrar por Status"
+msgstr "Filtrar por Estado"
+
+msgid "Salvar Nota"
+msgstr "Guardar Nota"
+
+msgid "Criar Tarefa"
+msgstr "Crear Tarea"
+
+msgid "Criar Nota"
+msgstr "Crear Nota"
+
+msgid "Criar Novo Evento"
+msgstr "Crear Nuevo Evento"
+
+msgid "Sem tarefas recentes."
+msgstr "Sin tareas recientes."

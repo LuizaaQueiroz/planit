@@ -1,37 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ get_locale() }}">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório de Tarefas</title>
+    <title>{{ _('Lista de Tarefas') }}</title>
     <style>
         body { font-family: Arial, sans-serif; }
-        h1 { color: #2e7d32; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; }
-        th { background-color: #e0f4e0; }
+        h2 { color: #2e7d32; }
+        .task { border: 1px solid #ccc; margin-bottom: 10px; padding: 8px; }
     </style>
 </head>
 <body>
-    <h1>Relatório de Tarefas</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Status</th>
-                <th>Data</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr>
-                <td>{{ task.title }}</td>
-                <td>{{ task.description }}</td>
-                <td>{{ task.status }}</td>
-                <td>{{ task.due_date.strftime('%d/%m/%Y') if task.due_date else '-' }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h2>{{ _('Minhas Tarefas') }}</h2>
+{% for task in tasks %}
+    <div class="task">
+        <strong>{{ task.title }}</strong><br>
+        {{ task.description }}<br>
+        {{ _('Status') }}: {{ _(task.status) }}
+    </div>
+{% else %}
+    <p>{{ _('Nenhuma tarefa encontrada.') }}</p>
+{% endfor %}
 </body>
 </html>

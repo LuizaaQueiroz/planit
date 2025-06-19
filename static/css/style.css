@@ -344,17 +344,16 @@ nav.pastel-header {
     background-color: #1b5e20;
     color: white;
 }
-.calendar-cell.today {
-    background-color: #d0f0d3;  /* Verde pastel para o dia de hoje */
-    border: 2px solid #2e7d32;
+.calendar-cell.hoje {
+    background-color: #c4e9d8; /* Verde claro pastel */
+    border: 2px solid #12643e; /* Verde escuro para destaque */
+    color: #0f5132; /* Texto em verde escuro */
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Remover zoom ao clicar fora */
-.calendar-cell.active {
-    transform: scale(1.2);
-    z-index: 10;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    background-color: #e8f5e9;
-    position: relative;
+.calendar-cell.hoje .numero-dia a {
+    color: #0f5132;
+    text-decoration: underline;
 }
 
