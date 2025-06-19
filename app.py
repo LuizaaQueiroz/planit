@@ -1,3 +1,13 @@
+"""
+PlanIt - Flask Web App
+
+Este módulo contém todas as rotas principais para o aplicativo de organização pessoal PlanIt.
+Inclui rotas para tarefas, notas, calendário e internacionalização.
+
+Autor: Luiza Queiroz
+Data: 2025
+"""
+
 from flask import Flask, render_template, request, redirect, url_for, make_response, session
 from flask_babelex import Babel, gettext as _
 from models import db, User, Task, Note, Event
@@ -8,12 +18,12 @@ import calendar
 
 app = Flask(__name__)
 
-# Configuração Básica
+# ---------- Configuração Básica ----------
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///planit.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'your_secret_key'
 
-# Configuração de idiomas
+# ---------- Configuração de Idiomas ----------
 app.config['BABEL_DEFAULT_LOCALE'] = 'pt'
 app.config['BABEL_SUPPORTED_LOCALES'] = ['pt', 'en', 'es']
 
@@ -23,20 +33,41 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# -------- Internacionalização --------
+# ---------- Internacionalização ----------
 @babel.localeselector
 def get_locale():
+    """
+    Seleciona o idioma da sessão atual.
+
+    Returns:
+        str: Código de idioma atual (ex: 'pt', 'en', 'es').
+    """
     return session.get('lang', 'pt')
 
 @app.route('/set_language/<lang_code>')
 def set_language(lang_code):
+    """
+    Altera o idioma da aplicação.
+
+    Args:
+        lang_code (str): Código do idioma (pt, en, es).
+
+    Redirects:
+        Para a página anterior ou dashboard.
+    """
     if lang_code in ['pt', 'en', 'es']:
         session['lang'] = lang_code
     return redirect(request.referrer or url_for('dashboard'))
 
-# -------- Dashboard --------
+# ---------- Dashboard ----------
 @app.route('/')
 def dashboard():
+    """
+    Exibe o dashboard principal com resumo de tarefas, notas e calendário.
+
+    Returns:
+        HTML: Página 'dashboard.html'.
+    """
     user_id = 1
     total_tasks = Task.query.filter_by(user_id=user_id).count()
     completed_tasks = Task.query.filter_by(user_id=user_id, status='Concluída').count()
@@ -67,9 +98,18 @@ def dashboard():
         month=today.month
     )
 
-# -------- Tasks --------
+# ---------- Tasks ----------
 @app.route('/tasks')
 def list_tasks():
+    """
+    Lista todas as tarefas do usuário.
+
+    Query Params:
+        status (str, opcional): Filtrar por status (pendentes, concluidas).
+
+    Returns:
+        HTML: Página 'tasks.html'.
+    """
     user_id = 1
     status_filter = request.args.get('status')
 
@@ -84,6 +124,15 @@ def list_tasks():
 
 @app.route('/tasks/create', methods=['GET', 'POST'])
 def create_task():
+    """
+    Cria uma nova tarefa.
+
+    GET: Exibe o formulário.
+    POST: Salva a tarefa no banco.
+
+    Returns:
+        HTML ou redirect.
+    """
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
@@ -98,6 +147,15 @@ def create_task():
 
 @app.route('/tasks/delete/<int:id>')
 def delete_task(id):
+    """
+    Exclui uma tarefa pelo ID.
+
+    Args:
+        id (int): ID da tarefa.
+
+    Redirects:
+        Para listagem de tarefas.
+    """
     task = Task.query.get_or_404(id)
     db.session.delete(task)
     db.session.commit()
@@ -105,6 +163,15 @@ def delete_task(id):
 
 @app.route('/tasks/complete/<int:id>')
 def complete_task(id):
+    """
+    Marca uma tarefa como concluída.
+
+    Args:
+        id (int): ID da tarefa.
+
+    Redirects:
+        Para listagem de tarefas.
+    """
     task = Task.query.get_or_404(id)
     task.status = 'Concluída'
     db.session.commit()
@@ -112,6 +179,15 @@ def complete_task(id):
 
 @app.route('/tasks/complete_from_dashboard/<int:id>')
 def complete_task_from_dashboard(id):
+    """
+    Conclui uma tarefa direto do dashboard.
+
+    Args:
+        id (int): ID da tarefa.
+
+    Redirects:
+        Para o dashboard.
+    """
     task = Task.query.get_or_404(id)
     task.status = 'Concluída'
     db.session.commit()
@@ -119,6 +195,12 @@ def complete_task_from_dashboard(id):
 
 @app.route('/tasks/pdf')
 def generate_tasks_pdf():
+    """
+    Gera um PDF com todas as tarefas.
+
+    Returns:
+        PDF: Arquivo PDF com a lista de tarefas.
+    """
     tasks = Task.query.filter_by(user_id=1).all()
     html = render_template('tasks_pdf.html', tasks=tasks)
     result = BytesIO()
@@ -130,14 +212,29 @@ def generate_tasks_pdf():
     response.headers['Content-Disposition'] = 'inline; filename=tarefas.pdf'
     return response
 
-# -------- Notes --------
+# ---------- Notes ----------
 @app.route('/notes')
 def list_notes():
+    """
+    Lista todas as notas do usuário.
+
+    Returns:
+        HTML: Página 'notes.html'.
+    """
     notes = Note.query.filter_by(user_id=1).all()
     return render_template('notes.html', notes=notes)
 
 @app.route('/notes/create', methods=['GET', 'POST'])
 def create_note():
+    """
+    Cria uma nova nota.
+
+    GET: Exibe formulário.
+    POST: Salva a nota.
+
+    Returns:
+        HTML ou redirect.
+    """
     if request.method == 'POST':
         content = request.form['content']
         new_note = Note(content=content, user_id=1)
@@ -148,19 +245,44 @@ def create_note():
 
 @app.route('/notes/delete/<int:id>')
 def delete_note(id):
+    """
+    Exclui uma nota pelo ID.
+
+    Args:
+        id (int): ID da nota.
+
+    Redirects:
+        Para listagem de notas.
+    """
     note = Note.query.get_or_404(id)
     db.session.delete(note)
     db.session.commit()
     return redirect(url_for('list_notes'))
 
-# -------- Calendar --------
+# ---------- Calendar ----------
 @app.route('/calendar')
 def calendar_redirect():
+    """
+    Redireciona para o calendário do mês atual.
+
+    Redirects:
+        Para /calendar/<year>/<month>
+    """
     today = datetime.today()
     return redirect(url_for('calendar_view', year=today.year, month=today.month))
 
 @app.route('/calendar/<int:year>/<int:month>')
 def calendar_view(year, month):
+    """
+    Exibe o calendário de um determinado mês/ano.
+
+    Args:
+        year (int): Ano.
+        month (int): Mês.
+
+    Returns:
+        HTML: Página 'calendar.html'.
+    """
     user_id = 1
     if month < 1 or month > 12:
         return redirect(url_for('calendar_redirect'))
@@ -224,6 +346,17 @@ def calendar_view(year, month):
 
 @app.route('/events/create/<int:year>/<int:month>/<int:day>', methods=['GET', 'POST'])
 def create_event_for_day(year, month, day):
+    """
+    Cria um novo evento para um dia específico.
+
+    Args:
+        year (int): Ano.
+        month (int): Mês.
+        day (int): Dia.
+
+    Returns:
+        HTML ou redirect.
+    """
     user_id = 1
     if request.method == 'POST':
         title = request.form['title']
@@ -237,14 +370,30 @@ def create_event_for_day(year, month, day):
 
 @app.route('/events/delete/<int:id>')
 def delete_event(id):
+    """
+    Exclui um evento.
+
+    Args:
+        id (int): ID do evento.
+
+    Redirects:
+        Para o calendário do mês correspondente.
+    """
     event = Event.query.get_or_404(id)
     target_year = event.date.year
     target_month = event.date.month
     db.session.delete(event)
     db.session.commit()
     return redirect(url_for('calendar_view', year=target_year, month=target_month))
+
 @app.context_processor
 def inject_get_locale():
+    """
+    Torna get_locale() acessível dentro dos templates Jinja.
+
+    Returns:
+        dict: Função get_locale.
+    """
     return dict(get_locale=get_locale)
 
 if __name__ == '__main__':
