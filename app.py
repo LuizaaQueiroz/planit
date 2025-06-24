@@ -9,7 +9,7 @@ Data: 2025
 """
 
 from flask import Flask, render_template, request, redirect, url_for, make_response, session
-from flask_babelex import Babel, gettext as _
+from flask_babel import Babel, gettext as _
 from models import db, User, Task, Note, Event
 from datetime import datetime
 from xhtml2pdf import pisa
@@ -34,7 +34,6 @@ with app.app_context():
     db.create_all()
 
 # ---------- Internacionalização ----------
-@babel.localeselector
 def get_locale():
     """
     Seleciona o idioma da sessão atual.
@@ -43,6 +42,8 @@ def get_locale():
         str: Código de idioma atual (ex: 'pt', 'en', 'es').
     """
     return session.get('lang', 'pt')
+
+babel = Babel(app, locale_selector=get_locale)
 
 @app.route('/set_language/<lang_code>')
 def set_language(lang_code):
