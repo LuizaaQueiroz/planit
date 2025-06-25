@@ -94,7 +94,7 @@ PlanIt/
 ├── translations/
 ├── templates/
 ├── static/
-├── docs/              # (opcional - documentação gerada via pdoc)
+├── docs/              
 └── README.md
 ```
 
@@ -102,12 +102,13 @@ PlanIt/
 
 ## 👩‍💻 Tecnologias Utilizadas
 
-- Python 3
-- Flask
-- Flask-Babel / Flask-Babelex
-- SQLAlchemy
-- SQLite
-- Bootstrap 5
-- Jinja2
-- Babel CLI
-- xhtml2pdf (para exportação PDF)
+- Python 3.11: Linguagem principal.
+- Flask 2.3.2: Framework web.
+- Flask-SQLAlchemy 3.1.1: ORM para gerenciamento do banco SQLite.
+- Flask-Babel 3.1.0: Suporte à internacionalização.
+- xhtml2pdf 0.2.17: Geração de PDFs (com from xhtml2pdf import pisa).
+- SQLite: Banco de dados leve (instance/planit.db).
+- Jinja2: Renderização de templates.
+- Babel CLI: Ferramenta para compilar traduções (via translations.py).
+
+
