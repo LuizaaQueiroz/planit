@@ -14,7 +14,7 @@ O objetivo principal é ajudar usuários a organizar suas atividades diárias de
 1. **Clone o repositório:**
 
 ```bash
-git clone https://github.com/seuusuario/planit.git
+git clone https://github.com/LuizaaQueiroz/planit.git
 cd planit
 ```
 
@@ -40,7 +40,7 @@ python
 >>> exit()
 ```
 
-5. **Compile os arquivos de tradução (se quiser testar os idiomas):**
+5. **Compile os arquivos de tradução:**
 
 ```bash
 pybabel compile -d translations
@@ -71,7 +71,7 @@ python app.py
 
 ---
 
-## 📝 Funcionalidades Desejadas (ToDo) ❌
+## 📝 Funcionalidades Desejadas ❌
 
 - ❌ Login/Logout (Autenticação de Usuário)
 - ❌ Cadastro de múltiplos usuários
